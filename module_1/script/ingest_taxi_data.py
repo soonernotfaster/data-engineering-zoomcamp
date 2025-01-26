@@ -22,8 +22,8 @@ def insert_data(connection: Connection, path: PathLike[str], table_name: str, da
 def ingest() -> None:
     engine = create_engine(CONNECTION_STRING)
     with engine.begin() as connection:
-        insert_data(connection, YELLOW_CAB_CSV, table_name="yellow_taxi_data", date_columns = DATE_COLUMNS)
-        insert_data(connection, ZONE_CSV, table_name="zone")
+        insert_data(connection, YELLOW_CAB_CSV, table_name="yellow_taxi_trips", date_columns = DATE_COLUMNS)
+        insert_data(connection, ZONE_CSV, table_name="zones")
 
 if __name__ == "__main__":
     ingest()
