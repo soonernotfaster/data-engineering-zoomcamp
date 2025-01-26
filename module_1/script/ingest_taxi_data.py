@@ -12,7 +12,7 @@ TABLE_NAME = "yellow_taxi_data"
 
 def insert_data(connection: Connection, path: PathLike[str]) -> None:
     """
-    Inserts data in chunks from the provided path.
+    Inserts data in chunks from the provided path.g
     """
     data_iters = pd.read_csv(path, parse_dates=DATE_COLUMNS, chunksize=100_000, iterator=True)
     
