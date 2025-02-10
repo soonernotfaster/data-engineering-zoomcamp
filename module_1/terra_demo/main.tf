@@ -12,6 +12,7 @@ terraform {
 }
 
 provider "google" {
-  project = project_id
-  region  = "useast1"
+  project     = project_id
+  region      = "useast1"
+  credentials = "./keys/creds.json"
 }
