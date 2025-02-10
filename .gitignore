@@ -175,3 +175,7 @@ cython_debug/
 
 # Data
 *.csv
+
+# keys
+module_1/terra_demo/keys/*
+!module_1/terra_demo/keys/.keep
