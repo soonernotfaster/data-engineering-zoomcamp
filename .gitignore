@@ -183,3 +183,4 @@ module_1/terra_demo/keys/*
 # Terraform variables
 *.tfvars
 .terraform
+module_1/terra_demo/tf_state
