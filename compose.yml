@@ -10,7 +10,7 @@ services:
         networks:
             - pg-network
         volumes:
-            - ./module_1/docker_intro/ny_taxi_postgres_data:/var/lib/postgresql/data:rw
+            - ./01-docker-terraform/docker_intro/ny_taxi_postgres_data:/var/lib/postgresql/data:rw
 
     pgadmin:
         image: dpage/pgadmin4
@@ -22,7 +22,7 @@ services:
         networks:
             - pg-network
         volumes:
-            - ./module_1/docker_intro/pg-admin-data:/var/lib/pgadmin:rw
+            - ./01-docker-terraform/docker_intro/pg-admin-data:/var/lib/pgadmin:rw
 
 networks:
     pg-network:

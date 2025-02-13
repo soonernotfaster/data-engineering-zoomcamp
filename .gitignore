@@ -177,10 +177,13 @@ cython_debug/
 *.csv
 
 # keys
-module_1/terra_demo/keys/*
-!module_1/terra_demo/keys/.keep
+01-docker-terraform/terra_demo/keys/*
+!01-docker-terraform/terra_demo/keys/.keep
 
 # Terraform variables
 *.tfvars
 .terraform
-module_1/terra_demo/tf_state
+01-docker-terraform/terra_demo/tf_state
+
+# venv
+data-camp/

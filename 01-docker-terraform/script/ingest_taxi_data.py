@@ -6,8 +6,8 @@ from sqlalchemy import create_engine, Engine, Connection
 from os import PathLike
 
 DATE_COLUMNS = ["tpep_pickup_datetime", "tpep_dropoff_datetime"]
-YELLOW_CAB_CSV = "module_1/docker_intro/data/yellow_tripdata_2021-01.csv"
-ZONE_CSV = "module_1/docker_intro/data/taxi_zone_lookup.csv"
+YELLOW_CAB_CSV = "01-docker-terraform/docker_intro/data/yellow_tripdata_2021-01.csv"
+ZONE_CSV = "01-docker-terraform/docker_intro/data/taxi_zone_lookup.csv"
 CONNECTION_STRING = "postgresql://root:root@localhost:5432/ny_taxi"
 
 def insert_data(connection: Connection, path: PathLike[str], table_name: str, date_columns: list[str] = None) -> None:
