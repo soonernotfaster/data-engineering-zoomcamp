@@ -12,3 +12,4 @@ echo "Data at: $DEST"
 
 gunzip "$DEST/$(basename $GREEN_TRIPS)"
 
+./01-docker-terraform/script/ingest_taxi_data.py -f 01-docker-terraform/docker_intro/data/taxi_zone_lookup.csv  -t wobb

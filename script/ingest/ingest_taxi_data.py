@@ -38,6 +38,7 @@ def args(args):
     return parser.parse_args(args)
 
 if __name__ == "__main__":
+    print(argv[1:])
     arguments = args(argv[1:])
     print(arguments)
     # ingest(arguments)
