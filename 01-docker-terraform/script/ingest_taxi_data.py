@@ -2,8 +2,10 @@
 
 import pandas as pd
 from tqdm import tqdm
-from sqlalchemy import create_engine, Engine, Connection
+from sqlalchemy import create_engine, Connection
 from os import PathLike
+from argparse import ArgumentParser
+from sys import argv
 
 DATE_COLUMNS = ["tpep_pickup_datetime", "tpep_dropoff_datetime"]
 YELLOW_CAB_CSV = "01-docker-terraform/docker_intro/data/yellow_tripdata_2021-01.csv"
@@ -19,11 +21,23 @@ def insert_data(connection: Connection, path: PathLike[str], table_name: str, da
     for df in tqdm(data_iters):
         df.to_sql(name=table_name, con=connection, if_exists="append")
 
-def ingest() -> None:
+def ingest(arguments) -> None:
     engine = create_engine(CONNECTION_STRING)
     with engine.begin() as connection:
-        insert_data(connection, YELLOW_CAB_CSV, table_name="yellow_taxi_trips", date_columns = DATE_COLUMNS)
-        insert_data(connection, ZONE_CSV, table_name="zones")
+        insert_data(connection, arguments.filename, table_name=arguments.table, date_columns = arguments.date_cols)
+
+def args(args):
+    parser = ArgumentParser(
+        prog="Data ingestion",
+        description="Uploads files to a postgres instance running in docker"
+    )
+
+    parser.add_argument("-f", dest="filename", required=True, help="File to ingest")
+    parser.add_argument("-t", dest="table", required=True, help="Table name")
+    parser.add_argument("--date-cols", dest="date_cols", required=False, help="")
+    return parser.parse_args(args)
 
 if __name__ == "__main__":
-    ingest()
+    arguments = args(argv[1:])
+    print(arguments)
+    # ingest(arguments)
