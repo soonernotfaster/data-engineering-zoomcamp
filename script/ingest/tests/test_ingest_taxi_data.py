@@ -1,9 +1,10 @@
-import unittest
+import pytest
+import re
 from script.ingest.ingest_taxi_data import args
 
-class TestIngestTaxiData(unittest.TestCase):
-    def test_foo(self):
-        self.assertFalse(True)
-
-if __name__ == "__main__":
-    unittest.main()
+def test_args(capsys):
+    with pytest.raises(SystemExit):
+        args("")
+    
+    _out, err = capsys.readouterr()
+    assert re.match("usage:.*", err)
