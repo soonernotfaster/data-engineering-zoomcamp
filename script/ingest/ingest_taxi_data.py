@@ -34,7 +34,7 @@ def args(args):
 
     parser.add_argument("-f", dest="filename", required=True, help="File to ingest")
     parser.add_argument("-t", dest="table", required=True, help="Table name")
-    parser.add_argument("--date-cols", dest="date_cols", required=False, help="")
+    parser.add_argument("--date-cols", dest="date_cols", nargs="*", required=False, help="")
     return parser.parse_args(args)
 
 if __name__ == "__main__":
