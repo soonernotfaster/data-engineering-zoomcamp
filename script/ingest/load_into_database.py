@@ -23,7 +23,7 @@ def drop_table(connection: Connection, table_name: str) -> None:
     drop_command = text(f"DROP TABLE IF EXISTS {table_name};")
     connection.execute(drop_command)
 
-def ingest(input) -> None:
+def load(input) -> None:
     engine = create_engine(CONNECTION_STRING)
     with engine.begin() as connection:
         drop_table(connection, input.table)
@@ -42,4 +42,4 @@ def parse_input(args):
 
 if __name__ == "__main__":
     input = parse_input(argv[1:])
-    ingest(input)
+    load(input)
