@@ -1,6 +1,6 @@
 import pytest
 import re
-from script.ingest.ingest_taxi_data import args
+from script.ingest.ingest_taxi_data import parse_input
 
 TABLE_ARGS = ["-t", "table_name"]
 FILENAME_ARGS = ["-f", "in.csv"]
@@ -19,13 +19,13 @@ TABLE_FLAG = "-t"
 )
 def test_incomple_args(capsys, input, pattern):
     with pytest.raises(SystemExit):
-        args(input)
+        parse_input(input)
     
     _out, err = capsys.readouterr()
     assert re.match(pattern, err, flags=re.MULTILINE | re.DOTALL)
 
 def test_all_args_provided():
-    result = args(TABLE_ARGS + FILENAME_ARGS + DATE_COL_ARGS)
+    result = parse_input(TABLE_ARGS + FILENAME_ARGS + DATE_COL_ARGS)
 
     assert result.filename == FILENAME_ARGS[-1]
     assert result.table == TABLE_ARGS[-1]

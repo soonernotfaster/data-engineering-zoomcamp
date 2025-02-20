@@ -21,12 +21,12 @@ def insert_data(connection: Connection, path: PathLike[str], table_name: str, da
     for df in tqdm(data_iters):
         df.to_sql(name=table_name, con=connection, if_exists="append")
 
-def ingest(arguments) -> None:
+def ingest(input) -> None:
     engine = create_engine(CONNECTION_STRING)
     with engine.begin() as connection:
-        insert_data(connection, arguments.filename, table_name=arguments.table, date_columns = arguments.date_cols)
+        insert_data(connection, input.filename, table_name=input.table, date_columns = input.date_cols)
 
-def args(args):
+def parse_input(args):
     parser = ArgumentParser(
         prog="Data ingestion",
         description="Uploads files to a postgres instance running in docker"
@@ -39,6 +39,5 @@ def args(args):
 
 if __name__ == "__main__":
     print(argv[1:])
-    arguments = args(argv[1:])
-    print(arguments)
-    # ingest(arguments)
+    input = parse_input(argv[1:])
+    ingest(input)
