@@ -2,14 +2,11 @@
 
 import pandas as pd
 from tqdm import tqdm
-from sqlalchemy import create_engine, Connection
+from sqlalchemy import create_engine, Connection, text, String
 from os import PathLike
 from argparse import ArgumentParser
 from sys import argv
 
-DATE_COLUMNS = ["tpep_pickup_datetime", "tpep_dropoff_datetime"]
-YELLOW_CAB_CSV = "01-docker-terraform/docker_intro/data/yellow_tripdata_2021-01.csv"
-ZONE_CSV = "01-docker-terraform/docker_intro/data/taxi_zone_lookup.csv"
 CONNECTION_STRING = "postgresql://root:root@localhost:5432/ny_taxi"
 
 def insert_data(connection: Connection, path: PathLike[str], table_name: str, date_columns: list[str] = None) -> None:
@@ -21,9 +18,15 @@ def insert_data(connection: Connection, path: PathLike[str], table_name: str, da
     for df in tqdm(data_iters):
         df.to_sql(name=table_name, con=connection, if_exists="append")
 
+def drop_table(connection: Connection, table_name: str) -> None:
+    # Unfortunality, there is no way to parameterize the table in a safe way
+    drop_command = text(f"DROP TABLE IF EXISTS {table_name};")
+    connection.execute(drop_command)
+
 def ingest(input) -> None:
     engine = create_engine(CONNECTION_STRING)
     with engine.begin() as connection:
+        drop_table(connection, input.table)
         insert_data(connection, input.filename, table_name=input.table, date_columns = input.date_cols)
 
 def parse_input(args):
