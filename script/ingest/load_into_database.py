@@ -19,17 +19,20 @@ def insert_data(connection: Connection, path: PathLike[str], table_name: str, da
         df.to_sql(name=table_name, con=connection, if_exists="append")
 
 def drop_table(connection: Connection, table_name: str) -> None:
+    """Drops the table if it exists"""
     # Unfortunality, there is no way to parameterize the table in a safe way
     drop_command = text(f"DROP TABLE IF EXISTS {table_name};")
     connection.execute(drop_command)
 
 def load(input) -> None:
+    """drops table and loads in a fresh copy"""
     engine = create_engine(CONNECTION_STRING)
     with engine.begin() as connection:
         drop_table(connection, input.table)
         insert_data(connection, input.filename, table_name=input.table, date_columns = input.date_cols)
 
 def parse_input(args):
+    """Parses commandline arguments into an object"""
     parser = ArgumentParser(
         prog="Data ingestion",
         description="Uploads files to a postgres instance running in docker"
