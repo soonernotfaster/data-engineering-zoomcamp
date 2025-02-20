@@ -14,7 +14,7 @@ CONNECTION_STRING = "postgresql://root:root@localhost:5432/ny_taxi"
 
 def insert_data(connection: Connection, path: PathLike[str], table_name: str, date_columns: list[str] = None) -> None:
     """
-    Inserts data in chunks from the provided path.g
+    Inserts data in chunks from the provided path.
     """
     data_iters = pd.read_csv(path, parse_dates=date_columns, chunksize=100_000, iterator=True)
     
