@@ -1,6 +1,6 @@
 import pytest
 import re
-from script.ingest.ingest_taxi_data import parse_input
+from script.ingest.load_into_database import parse_input
 
 TABLE_ARGS = ["-t", "table_name"]
 FILENAME_ARGS = ["-f", "in.csv"]

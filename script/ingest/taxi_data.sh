@@ -26,16 +26,16 @@ ZONES_CSV=`basename $ZONES_SOURCE`
 
 echo "Data at: $DEST"
 
-./script/ingest/ingest_taxi_data.py \
+./script/ingest/load_into_database.py \
     -f "$DEST/$GREEN_TRIPS_CSV" \
     -t green_taxi_trips \
     --date-cols lpep_dropoff_datetime lpep_pickup_datetime
 
-./script/ingest/ingest_taxi_data.py \
+./script/ingest/load_into_database.py \
     -f "$DEST/$ZONES_CSV" \
     -t taxi_zones
 
-./script/ingest/ingest_taxi_data.py \
+./script/ingest/load_into_database.py \
     -f "$DEST/$YELLOW_TRIPS_CSV" \
     -t yellow_taxi_trips \
     --date-cols tpep_pickup_datetime tpep_dropoff_datetime

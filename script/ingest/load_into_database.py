@@ -41,6 +41,5 @@ def parse_input(args):
     return parser.parse_args(args)
 
 if __name__ == "__main__":
-    print(argv[1:])
     input = parse_input(argv[1:])
     ingest(input)
