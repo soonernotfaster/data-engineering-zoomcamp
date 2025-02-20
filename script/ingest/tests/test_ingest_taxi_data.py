@@ -6,27 +6,23 @@ TABLE_ARGS = ["-t", "table_name"]
 FILENAME_ARGS = ["-f", "in.csv"]
 DATE_COL_ARGS = ["--date-cols", "col_a", "col_b"]
 
-def test_all_args_missing(capsys):
+FILENAME_FLAG = "-f"
+TABLE_FLAG = "-t"
+
+@pytest.mark.parametrize(
+        ("input", "pattern"),
+        [
+            pytest.param([], f".*required:", id="no args"),
+            pytest.param(TABLE_ARGS, f".*required:.*{FILENAME_FLAG}.*", id="missing filename args"),
+            pytest.param(FILENAME_ARGS, f".*required:.*{TABLE_FLAG}.*", id="missing table args"),
+        ]
+)
+def test_incomple_args(capsys, input, pattern):
     with pytest.raises(SystemExit):
-        args([])
+        args(input)
     
     _out, err = capsys.readouterr()
-    assert re.match("usage:.*", err)
-
-
-def test_table_name_missing(capsys):
-    with pytest.raises(SystemExit):
-        args(FILENAME_ARGS)
-    
-    _out, err = capsys.readouterr()
-    assert re.match("usage:.*", err)
-
-def test_filename_missing(capsys):
-    with pytest.raises(SystemExit):
-        args(TABLE_ARGS)
-    
-    _out, err = capsys.readouterr()
-    assert re.match("usage:.*", err)
+    assert re.match(pattern, err, flags=re.MULTILINE | re.DOTALL)
 
 def test_all_args_provided():
     result = args(TABLE_ARGS + FILENAME_ARGS + DATE_COL_ARGS)
